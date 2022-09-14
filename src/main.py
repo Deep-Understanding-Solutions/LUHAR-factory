@@ -13,7 +13,7 @@ article_data = {
     },
     "ta3": {
         "total": 245922,
-        "parsed": 2788,
+        "parsed": 4363,
         "domain": "ta3.com/clanok"
     }
 }
