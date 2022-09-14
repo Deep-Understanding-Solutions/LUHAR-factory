@@ -8,12 +8,12 @@ df = pd.read_csv("data/scrapped.csv", index_col="id")
 article_data = {
     "slovenskeslovo": {
         "total": 2670,
-        "parsed": 1898,
+        "parsed": 1053,
         "domain": "slovenskeslovo.sk"
     },
     "ta3": {
         "total": 245922,
-        "parsed": 4363,
+        "parsed": 1183,
         "domain": "ta3.com/clanok"
     }
 }
@@ -30,7 +30,7 @@ for article_decrement in range(article_data[selector]['total'] - article_data[se
 
     try:
         # TA3
-        title = soup.find('h1', attrs={'class': 'article-title'}).get_text().strip().replace("\xa0", " ")
+        title = soup.find('h1', attrs={'class': 'article-title'}).get_text().strip().replace("\xa0", " ").replace("\xad", "-")
         # slovenskeslovo
         # title = soup.find('h2', attrs={'class': 'avatar-article-heading'}).get_text().strip().replace("\xa0", " ")
     except Exception:
@@ -47,7 +47,7 @@ for article_decrement in range(article_data[selector]['total'] - article_data[se
     try:
         # TA3
         content = soup.find('div', attrs={'class': 'article-component'}).find_all('p')
-        content = list(map(lambda paragraph: paragraph.get_text().strip().replace("\xa0", " "), content))
+        content = list(map(lambda paragraph: paragraph.get_text().strip().replace("\xa0", " ").replace("\xad", "-"), content))
         # slovenskeslovo
         # content = soup.find('div', attrs={'class': 'item-page'}).find_all('p')
         # content = list(map(lambda paragraph: paragraph.get_text().strip().replace("\xa0", " "), content))
