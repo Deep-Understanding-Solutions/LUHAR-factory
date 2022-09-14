@@ -58,4 +58,4 @@ for article_decrement in range(article_data[selector]['total'] - article_data[se
 
     if title != "" and article != "":
         df.loc[len(df.index)] = [title, article, "None", "None", "None", 0]
-        df.to_csv('data/scrapped.csv', mode="w", header=True)
+        df.to_csv('data/scrapped.csv', mode="w", header=False)
