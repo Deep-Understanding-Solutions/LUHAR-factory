@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-df = pd.read_csv("data/scrapped.csv", index_col="id")
+df = pd.read_csv("data/LUHAR.csv", index_col="id")
 
 # Article identifiers for each page.
 article_data = {
