@@ -88,3 +88,4 @@ with shelve.open('counter') as db:
 
         db[db_keys[session_selector]] += 1
         print(f"Articles parsed: {article_decrement + parsed_articles + 1} / {total_articles[session_selector]}")
+    print(f"Session selector {session_selector} has been parsed.")

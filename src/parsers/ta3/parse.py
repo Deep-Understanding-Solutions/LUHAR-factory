@@ -70,10 +70,25 @@ with shelve.open('counter') as db:
         except Exception:
             article = ""
 
+        try:
+            category = ""\
+                .join(
+                    soup.find('div', attrs={'class': 'headline-meta-category'})
+                        .get_text()
+                        .strip()
+                        .replace("\xa0", " ")
+                        .replace("\xad", "-")
+                        .replace("\r", "")
+                        .replace("\n", "")
+                        .splitlines()
+                )
+        except Exception:
+            category = "None"
+
         if title != "" and article != "":
             csv_path = "src/parsers/ta3/data.csv"
             ta3_df = pd.read_csv(csv_path)
-            new_df = pd.DataFrame({"title": [title], "text": [article], "commentary": ["None"], "locality": ["None"], "category": ["None"],
+            new_df = pd.DataFrame({"title": [title], "text": [article], "commentary": ["None"], "locality": ["None"], "category": [category],
                                "label": [label]})
             concatenated = pd.concat([ta3_df, new_df], axis=0, ignore_index=True)
             concatenated.to_csv(csv_path, index=False)
