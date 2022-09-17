@@ -3,14 +3,13 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import shelve
 
-total_articles_1 = 2001
-total_articles_2 = 543
+total_articles = (2000, 543)
 
 label = 0
 
 sitemaps = ("https://www.protiprudu.org/sitemap-1.xml", "https://www.protiprudu.org/sitemap-2.xml")
-db_keys = ("'parsed_articles_protiprudu_1'", "'parsed_articles_protiprudu_2'")
-session_selector = 0
+db_keys = ("parsed_articles_protiprudu_1", "parsed_articles_protiprudu_2")
+session_selector = 1
 
 sitemap_data = sitemaps[session_selector]
 req = requests.get(f"{sitemaps[session_selector]}")
@@ -25,9 +24,7 @@ with shelve.open('counter') as db:
         db[db_keys[session_selector]] = 0
         parsed_articles = 0
 
-    for article_decrement in range(total_articles_1 - parsed_articles):
-        article_id = total_articles_1 - article_decrement - parsed_articles - 1
-
+    for article_decrement in range(total_articles[session_selector] - parsed_articles):
         req = requests.get(f"{links[article_decrement + parsed_articles]}")
         soup = BeautifulSoup(req.content, 'html5lib')
 
@@ -80,4 +77,4 @@ with shelve.open('counter') as db:
             print("Article added!")
 
         db[db_keys[session_selector]] += 1
-        print(f"Articles parsed: {article_decrement + parsed_articles + 1} / {total_articles_1}")
+        print(f"Articles parsed: {article_decrement + parsed_articles + 1} / {total_articles[session_selector]}")

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import shelve
 
-total_articles = 245923
+total_articles = 245923 + 1
 label = 1
 url = "https://ta3.com/clanok/"
 db_key = "parsed_articles_ta3"
@@ -80,4 +80,4 @@ with shelve.open('counter') as db:
             print("Article added!")
 
         db[db_key] += 1
-        print(f"Articles parsed: {article_decrement + parsed_articles + 1} / {total_articles}")
+        print(f"Articles parsed: {article_decrement + parsed_articles + 1} / {total_articles - 1}")
