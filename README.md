@@ -18,4 +18,4 @@ More scripts included are:
 
 `/src/desribe.py` - Outputs information about dataset to terminal,
 
-`/src/{media-name}/defragment.py` - build LUHAR.csv by combining all fragments.
+`/src/defragment.py` - build LUHAR.csv by combining all fragments.
