@@ -19,7 +19,6 @@ db_keys = (
 session_selector_key = f"session_selector_{source_id}"
 
 with shelve.open('counter') as db:
-    db[session_selector_key] = 0
     try:
         key = db[session_selector_key]
     except KeyError:
