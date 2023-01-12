@@ -2,4 +2,4 @@
 trained_model/*
 __pycache__
 deep_judge.pth
-LUHAR.c
+LUHAR.csv
