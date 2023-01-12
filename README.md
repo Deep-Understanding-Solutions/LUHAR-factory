@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://gcdnb.pbrd.co/images/vU7OIQGrTN7W.png" align="center" width="200" style="border-radius: 20px;"/>
+  <img src="./logo.png" align="center" width="200" style="border-radius: 20px;"/>
 </p>
 
 # LUHAR-factory
