@@ -19,6 +19,7 @@ db_keys = (
 session_selector_key = f"session_selector_{source_id}"
 
 with shelve.open('counter') as db:
+    db[session_selector_key] = 0
     try:
         key = db[session_selector_key]
     except KeyError:
@@ -28,7 +29,7 @@ with shelve.open('counter') as db:
         sitemap_data = sitemaps[db[session_selector_key]]
         req = requests.get(f"{sitemaps[db[session_selector_key]]}")
         soup_sitemap = BeautifulSoup(req.content, 'xml')
-        links = soup_sitemap.findAll('loc')
+        links = soup_sitemap.findAll('a')
         links = list(map(lambda link: link.get_text(), links))
 
         total_articles = len(links)
