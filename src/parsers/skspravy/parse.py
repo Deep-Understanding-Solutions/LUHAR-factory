@@ -113,8 +113,7 @@ with shelve.open('counter') as db:
             if title != "" and article != "":
                 csv_path = f"src/parsers/{source_id}/data.csv"
                 df = pd.read_csv(csv_path)
-                new_df = pd.DataFrame({"title": [title], "text": [article], "commentary": ["None"], "locality": ["None"], "category": [category],
-                                   "label": [label]})
+                new_df = pd.DataFrame({"title": [title], "text": [article], "commentary": ["None"], "locality": ["None"], "category": [category], "label": [label]})
                 concatenated = pd.concat([df, new_df], axis=0, ignore_index=True)
                 concatenated.to_csv(csv_path, index=False)
 
