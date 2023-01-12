@@ -2,9 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import shelve
+import sys, getopt
+
+opts = getopt.getopt(sys.argv, "hi:o:", ["ifile=", "ofile="])
+reset = '-reset' in opts[1]
 
 source_id = "skspravy"
-
 label = 0
 
 sitemaps = (
@@ -15,18 +18,20 @@ sitemaps = (
     "https://skspravy.sk/post-sitemap5.xml",
     "https://skspravy.sk/post-sitemap6.xml",
 )
-db_keys = (
-    f"parsed_articles_{source_id}_1",
-    f"parsed_articles_{source_id}_2",
-    f"parsed_articles_{source_id}_3",
-    f"parsed_articles_{source_id}_4",
-    f"parsed_articles_{source_id}_5",
-    f"parsed_articles_{source_id}_6",
-)
+
+db_keys = []
+for i in range(len(sitemaps)): db_keys.append(f"parsed_articles_{source_id}_{i + 1}")
 
 session_selector_key = f"session_selector_{source_id}"
 
 with shelve.open('counter') as db:
+    if reset is True:
+        db[session_selector_key] = 0
+        for i in range(len(sitemaps)):
+            db[db_keys[i]] = 0
+        print("Session restored.")
+        exit(0)
+
     try:
         key = db[session_selector_key]
     except KeyError:
@@ -107,10 +112,10 @@ with shelve.open('counter') as db:
 
             if title != "" and article != "":
                 csv_path = f"src/parsers/{source_id}/data.csv"
-                ta3_df = pd.read_csv(csv_path)
+                df = pd.read_csv(csv_path)
                 new_df = pd.DataFrame({"title": [title], "text": [article], "commentary": ["None"], "locality": ["None"], "category": [category],
                                    "label": [label]})
-                concatenated = pd.concat([ta3_df, new_df], axis=0, ignore_index=True)
+                concatenated = pd.concat([df, new_df], axis=0, ignore_index=True)
                 concatenated.to_csv(csv_path, index=False)
 
             db[db_keys[db[session_selector_key]]] += 1

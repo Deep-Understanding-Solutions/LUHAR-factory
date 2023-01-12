@@ -59,8 +59,8 @@ with shelve.open('counter') as db:
         db[session_selector_key] = 0
 
     while db[session_selector_key] != len(db_keys):
-        sitemap_data = sitemaps[db["session_selector_rtvs"]]
-        req = requests.get(f"{sitemaps[db['session_selector_rtvs']]}")
+        sitemap_data = sitemaps[db[session_selector_key]]
+        req = requests.get(f"{sitemaps[db[session_selector_key]]}")
         soup_sitemap = BeautifulSoup(req.content, 'xml')
         links = soup_sitemap.findAll('loc')
         links = list(map(lambda link: link.get_text(), links))
